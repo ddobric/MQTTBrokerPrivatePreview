@@ -73,8 +73,6 @@ namespace MqttPublisher
                             });
 
                             Console.WriteLine("MQTT application message is published.");
-
-                            Console.ReadLine();
                         }
                     });
 
