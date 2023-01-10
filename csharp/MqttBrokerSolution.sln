@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqttBroker", "MqttBroker\MqttBroker.csproj", "{795B4EA0-84A7-45CD-88AC-79DA48F712A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttPublisher", "MqttPublisher\MqttPublisher.csproj", "{3A5721E9-8C0D-401F-B57F-9315E22AF803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttSubscriber", "MqttSubscriber\MqttSubscriber.csproj", "{CD4E57A8-9C01-420D-9DC7-7A3041A0A930}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{DD760252-CE6B-409D-80C8-13BF623A337F}"
+	ProjectSection(SolutionItems) = preProject
+		Certificates\azure-mqtt-test-only.chain.ca.cert.pem = Certificates\azure-mqtt-test-only.chain.ca.cert.pem
+		Certificates\azure-mqtt-test-only.intermediate.cert.pem = Certificates\azure-mqtt-test-only.intermediate.cert.pem
+		Certificates\azure-mqtt-test-only.intermediate.key.pem = Certificates\azure-mqtt-test-only.intermediate.key.pem
+		Certificates\azure-mqtt-test-only.root.ca.cert.pem = Certificates\azure-mqtt-test-only.root.ca.cert.pem
+		Certificates\azure-mqtt-test-only.root.ca.key.pem = Certificates\azure-mqtt-test-only.root.ca.key.pem
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{795B4EA0-84A7-45CD-88AC-79DA48F712A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795B4EA0-84A7-45CD-88AC-79DA48F712A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795B4EA0-84A7-45CD-88AC-79DA48F712A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795B4EA0-84A7-45CD-88AC-79DA48F712A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A5721E9-8C0D-401F-B57F-9315E22AF803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A5721E9-8C0D-401F-B57F-9315E22AF803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A5721E9-8C0D-401F-B57F-9315E22AF803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A5721E9-8C0D-401F-B57F-9315E22AF803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD4E57A8-9C01-420D-9DC7-7A3041A0A930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD4E57A8-9C01-420D-9DC7-7A3041A0A930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD4E57A8-9C01-420D-9DC7-7A3041A0A930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD4E57A8-9C01-420D-9DC7-7A3041A0A930}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {093CD8F0-1D84-4B81-BD4D-5767250AACF1}
+	EndGlobalSection
+EndGlobal
