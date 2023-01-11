@@ -12,7 +12,11 @@ namespace MqttBroker
     {
         static string host = "mqtt-sample0-RG-MQTT-BR-2d335f20.centraluseuap-1.ts.eventgrid.azure.net";
 
-        private static Task connectedTask;
+        /// <summary>
+        /// Demonstrates how to use the same client to publish and subscribe messages.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         static async Task Main(string[] args)
         {
 

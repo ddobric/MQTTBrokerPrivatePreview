@@ -11,20 +11,20 @@ namespace MqttSubscriber
 {
     internal class Program
     {
+        private const string topic = "samples/#";
         static string host = "mqtt-sample0-RG-MQTT-BR-2d335f20.centraluseuap-1.ts.eventgrid.azure.net";
 
         static async Task Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-
             CancellationTokenSource tSrc = new CancellationTokenSource();
 
-            Console.CancelKeyPress += (obj,arg)=> 
+            Console.CancelKeyPress += (obj, arg) =>
             {
-                Console.WriteLine("Exist.");
-
+                Console.WriteLine("Cancel detected.");
                 tSrc.Cancel();
             };
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
 
             Console.WriteLine("Mqtt Subscriber");
 
@@ -63,15 +63,17 @@ namespace MqttSubscriber
 
                 mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
 
-                await mqttClient.StartAsync(options);
-
-                await mqttClient.SubscribeAsync(new List<MqttTopicFilter>()
+                mqttClient.ConnectedAsync += async (args) =>
                 {
-                    new MqttTopicFilter()
+                    await mqttClient.SubscribeAsync(new List<MqttTopicFilter>()
                     {
-                         QualityOfServiceLevel = MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce,
-                          Topic = "samples/#"
-                    } });
+                        new MqttTopicFilter()
+                        {
+                             QualityOfServiceLevel = MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce,
+                             Topic = topic
+                        }
+                    });
+                };
 
                 mqttClient.ApplicationMessageReceivedAsync += (msg) =>
                 {
@@ -82,7 +84,7 @@ namespace MqttSubscriber
                         if (string.IsNullOrWhiteSpace(topic) == false)
                         {
                             string payload = Encoding.UTF8.GetString(msg.ApplicationMessage.Payload);
-                            
+
                             Console.WriteLine($"Topic: {topic}. Message Received: {payload}");
                         }
                     }
@@ -94,10 +96,20 @@ namespace MqttSubscriber
                     return Task.CompletedTask;
                 };
 
+                await mqttClient.StartAsync(options);
+
                 Console.WriteLine("Waiting on messages...");
 
                 tSrc.Token.WaitHandle.WaitOne();
+
+                Console.WriteLine("...");
+
+                // Dispose hangs!! Not required here. Used only to show hanging.
+                // Known bug: https://github.com/dotnet/MQTTnet/issues/765
+                mqttClient.Dispose();
             }
+
+            Console.WriteLine("Exiting application...");
         }
 
         private static void Console_CancelKeyPress(object? sender, ConsoleCancelEventArgs e)

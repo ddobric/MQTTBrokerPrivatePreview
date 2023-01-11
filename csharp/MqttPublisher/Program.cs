@@ -14,6 +14,14 @@ namespace MqttPublisher
 
         static async Task Main(string[] args)
         {
+            CancellationTokenSource tSrc = new CancellationTokenSource();
+
+            Console.CancelKeyPress += (obj, arg) =>
+            {
+                Console.WriteLine("Cancel detected.");
+                tSrc.Cancel();
+            };
+
             Console.ForegroundColor= ConsoleColor.Green;
             Console.WriteLine("MQTT Publisher!");
 
@@ -81,8 +89,16 @@ namespace MqttPublisher
 
                 await mqttClient.StartAsync(options);
 
-                await Task.Delay(int.MaxValue);
-            }                 
+                   tSrc.Token.WaitHandle.WaitOne();
+
+                Console.WriteLine("...");
+
+                // Dispose hangs!! Not required here. Used only to show hanging.
+                // Known bug: https://github.com/dotnet/MQTTnet/issues/765
+                mqttClient.Dispose();
+            }
+
+            Console.WriteLine("Exiting application...");                
         }
 
         private static Task MqttClient_ConnectionStateChangedAsync(EventArgs arg)
