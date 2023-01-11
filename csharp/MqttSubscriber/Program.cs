@@ -26,7 +26,7 @@ namespace MqttSubscriber
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            Console.WriteLine("Mqtt Subscriber");
+            Console.WriteLine("Mqtt Subscriber. Subscribes messages at the topic 'samples/#'");
 
             var caCert = X509Certificate.CreateFromCertFile(@"../../../../Certificates/azure-mqtt-test-only.root.ca.cert.pem");
             var clientCert = new X509Certificate2(@"../../../../Certificates/sub-client.cert.pfx", "1234");

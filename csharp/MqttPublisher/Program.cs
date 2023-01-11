@@ -14,6 +14,10 @@ namespace MqttPublisher
 
         static async Task Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("MQTT Publisher. Sends messages to 'samples/topic'");
+
             CancellationTokenSource tSrc = new CancellationTokenSource();
 
             Console.CancelKeyPress += (obj, arg) =>
@@ -22,8 +26,6 @@ namespace MqttPublisher
                 tSrc.Cancel();
             };
 
-            Console.ForegroundColor= ConsoleColor.Green;
-            Console.WriteLine("MQTT Publisher!");
 
             var caCert = X509Certificate.CreateFromCertFile(@"../../../../Certificates/azure-mqtt-test-only.root.ca.cert.pem");
             var clientCert = new X509Certificate2(@"../../../../Certificates/pub-client.cert.pfx", "1234");
