@@ -100,7 +100,7 @@ namespace MqttPublisher
                 mqttClient.Dispose();
             }
 
-            Console.WriteLine("Exiting application...");                
+            Console.WriteLine("Exiting application.");                
         }
 
         private static Task MqttClient_ConnectionStateChangedAsync(EventArgs arg)

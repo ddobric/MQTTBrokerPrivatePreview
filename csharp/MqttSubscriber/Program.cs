@@ -109,7 +109,7 @@ namespace MqttSubscriber
                 mqttClient.Dispose();
             }
 
-            Console.WriteLine("Exiting application...");
+            Console.WriteLine("Exiting application.");
         }
 
         private static void Console_CancelKeyPress(object? sender, ConsoleCancelEventArgs e)
