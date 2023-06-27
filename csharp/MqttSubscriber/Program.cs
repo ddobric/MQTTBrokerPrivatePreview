@@ -13,7 +13,10 @@ namespace MqttSubscriber
     internal class Program
     {
         //private const string topic = "samples/#";
-        private const string topic = "machines/topic1";
+        //private const string topic = "machines/topic1";
+        private const string topic = "machines/#";
+        //private const string topic = "machines/+/telemetry";
+        //private const string topic = "machines/+/space/+/telemetry";
         //static string host = "mqtt-sample0-RG-MQTT-BR-2d335f20.centraluseuap-1.ts.eventgrid.azure.net";
         static string host = "daenet-mqtt-prev.westeurope-1.ts.eventgrid.azure.net";
 
@@ -74,13 +77,14 @@ namespace MqttSubscriber
                 .WithProtocolVersion(MQTTnet.Formatter.MqttProtocolVersion.V500)
                 .WithTcpServer(host, 8883)
                 .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.ExactlyOnce)
+                .WithSessionExpiryInterval(36000)
                 .WithCredentials("client2-authnID", "")  //use client authentication name in the username
                 .WithTls(new MqttClientOptionsBuilderTlsParameters()
                 {
                     UseTls = true,
                     Certificates = new X509Certificate2Collection(certificate)
                 })
-                .WithCleanSession())
+                .WithCleanSession(false)) //We use here persistent *durable) session.
                 .Build();
 
 

@@ -31,36 +31,8 @@ namespace MqttPublisher
 
             var mqttFactory = new MqttFactory();
 
-            //var caCert = X509Certificate.CreateFromCertFile(@"../../../../Certificates/azure-mqtt-test-only.root.ca.cert.pem");
-            //var clientCert = new X509Certificate2(@"../../../../Certificates/pub-client.cert.pfx", "1234");
-            //var certificates = new List<X509Certificate2>() { new X509Certificate2(caCert), new X509Certificate2(clientCert) };
-
-            //using (var mqttClient = new MqttFactory().CreateManagedMqttClient())
-            //{
-            //    var options = new ManagedMqttClientOptionsBuilder()
-            //    .WithAutoReconnectDelay(TimeSpan.FromSeconds(30))
-            //    .WithClientOptions(new MqttClientOptionsBuilder()
-            //        .WithClientId("pub-client")
-            //        .WithProtocolVersion(MQTTnet.Formatter.MqttProtocolVersion.V311)
-            //        .WithTcpServer(host, 8883)
-            //        .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-            //        // Alternatively user credentials can be used.
-            //        //.WithCredentials(username, psw)
-            //        .WithTls(new MqttClientOptionsBuilderTlsParameters()
-            //        {
-            //            AllowUntrustedCertificates = true,
-            //            UseTls = true,
-            //            Certificates = certificates,
-            //            CertificateValidationHandler = delegate { return true; },
-            //            IgnoreCertificateChainErrors = true,
-            //            IgnoreCertificateRevocationErrors = true
-            //        })
-            //        .WithCleanSession()
-            //        .Build())
-            //    .Build();
-
-            string x509_pem = @"C:/Users/DamirDobric/client1-authnID.pem";  //Provide your client certificate .cer.pem file path
-            string x509_key = @"C:/Users/DamirDobric/client1-authnID.key";  //Provide your client certificate .key.pem file path
+            string x509_pem = @"C:/Users/DamirDobric/client1-authnID.pem";  
+            string x509_key = @"C:/Users/DamirDobric/client1-authnID.key";  
 
             var certificate = new X509Certificate2(X509Certificate2.CreateFromPemFile(x509_pem, x509_key).Export(X509ContentType.Pkcs12));
 
@@ -69,7 +41,7 @@ namespace MqttPublisher
                 var options = new ManagedMqttClientOptionsBuilder()
                  .WithClientOptions(new MqttClientOptionsBuilder()
                 .WithClientId("client1")
-                .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.ExactlyOnce)
+                .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                 .WithProtocolVersion(MQTTnet.Formatter.MqttProtocolVersion.V500)
                 .WithTcpServer(host, 8883)
 
@@ -79,7 +51,7 @@ namespace MqttPublisher
                     UseTls = true,
                     Certificates = new X509Certificate2Collection(certificate)
                 })
-                .WithCleanSession())
+                .WithCleanSession(false))
                 .Build();
 
                 mqttClient.ConnectingFailedAsync += MqttClient_ConnectingFailedAsync;
@@ -100,10 +72,11 @@ namespace MqttPublisher
                             var applicationMessage = new MqttApplicationMessageBuilder()
                             .WithTopic(topic)
                             .WithPayload(userTxt)
+                            .WithUserProperty("type", "console")
                             .Build();
 
                             await mqttClient.EnqueueAsync(new ManagedMqttApplicationMessage()
-                            {
+                            {   
                                 Id = Guid.NewGuid(),
                                 ApplicationMessage = applicationMessage
                             });
